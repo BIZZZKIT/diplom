@@ -17,15 +17,15 @@
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(90deg, #000000 0%, #5B5400 50%, #000000 100%);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        background: linear-gradient(90deg, #000000 0%, #5B5400 50%, #000000 100%) no-repeat fixed;
         background-size: cover;
     }
 
 </style>
 <body>
-@include('components.header')
+@if(!Route::is('authorisation') && !Route::is('registration'))
+    @include('components.header')
+@endif
 @yield('content')
 @if(Route::is('welcome'))
     @include('main')

@@ -84,19 +84,31 @@
                 </ul>
 
                 <!-- Аккаунт справа -->
-                <div class="account">
-                    <li class="nav-item dropdown" style="list-style: none;">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img width="50px" src="{{asset('assets/images/user.png')}}" alt="User">
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </div>
+                @auth()
+                    <div class="account">
+                        <li class="nav-item dropdown" style="list-style: none;">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="50px" src="{{asset('assets/images/user.png')}}" alt="User">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                @endauth
+                @guest()
+                    <div class="d-flex gap-2" style="font-family: Montserrat">
+                        <form action="{{route('registration')}}">
+                            <button type="submit" class="btn btn-enter" style="background-color: white">Войти</button>
+                        </form>
+                        <form action="{{route('registration')}}">
+                            <button type="submit" class="btn btn-yellow" style="background-color: #FFC300">Регистрация</button>
+                        </form>
+                    </div>
+                @endguest
             </div>
         </div>
     </nav>

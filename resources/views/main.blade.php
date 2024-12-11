@@ -42,8 +42,8 @@
 
 </style>
 <div class="container">
-    <div id="carouselExample" class="carousel slide" style="border-radius: 20px; overflow: hidden; padding-top: 57px; padding-bottom: 58px;">
-        <div class="carousel-inner" style="border-radius: 20px;">
+    <div id="carouselExample" class="carousel slide" style="border-radius: 20px; padding-top: 57px; padding-bottom: 58px;">
+        <div class="carousel-inner" style="border-radius: 20px; overflow: hidden; max-height: 670px;">
             <div class="carousel-item active">
                 <img src="{{asset('assets/images/carousel/2f6865a8366bde9d6401bf8877276e7e2e6feb8c.png')}}" class="d-block w-100" alt="...">
             </div>

@@ -23,7 +23,7 @@
 
 </style>
 <body>
-@if(!Route::is('authorisation') && !Route::is('registration'))
+@if(!Route::is('login') && !Route::is('registration'))
     @include('components.header')
 @endif
 @yield('content')

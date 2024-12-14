@@ -42,6 +42,12 @@
 
 </style>
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow" style="z-index: 1050; background-color: #f6ebc0; color: rgba(251,171,18,0.73)" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+        </div>
+    @endif
     <div id="carouselExample" class="carousel slide" style="border-radius: 20px; padding-top: 57px; padding-bottom: 58px;">
         <div class="carousel-inner" style="border-radius: 20px; overflow: hidden; max-height: 670px;">
             <div class="carousel-item active">

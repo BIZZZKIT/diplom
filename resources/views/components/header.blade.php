@@ -83,7 +83,6 @@
                     </li>
                 </ul>
 
-                <!-- Аккаунт справа -->
                 @auth()
                     <div class="account">
                         <li class="nav-item dropdown" style="list-style: none;">
@@ -94,14 +93,14 @@
                                 <li><a class="dropdown-item" href="#">Action</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="{{route('logout')}}">Выйти</a></li>
                             </ul>
                         </li>
                     </div>
                 @endauth
                 @guest()
                     <div class="d-flex gap-2" style="font-family: Montserrat">
-                        <form action="{{route('registration')}}">
+                        <form action="{{route('login')}}">
                             <button type="submit" class="btn btn-enter" style="background-color: white">Войти</button>
                         </form>
                         <form action="{{route('registration')}}">

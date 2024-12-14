@@ -19,3 +19,8 @@ Route::get('/', function () {
 })->name('welcome');
 Route::view('/registration', 'users.registration')->name('registration');
 Route::post('/registration', [UserController::class, 'registrationPost']);
+
+Route::view('/login', 'users.authorisation')->name('login');
+Route::post('/login', [UserController::class, 'authorisationPost']);
+
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');

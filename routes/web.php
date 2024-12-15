@@ -24,3 +24,6 @@ Route::view('/login', 'users.authorisation')->name('login');
 Route::post('/login', [UserController::class, 'authorisationPost']);
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::view('/catalog', 'users.catalog')->name('catalog');
+Route::post('/catalog', [UserController::class, 'createPremise'])->name('createPremise');

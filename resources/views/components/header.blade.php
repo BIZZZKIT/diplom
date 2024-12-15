@@ -73,7 +73,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Каталог</a>
+                        <a class="nav-link active" aria-current="page" href="{{route('catalog')}}">Каталог</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">О компании</a>

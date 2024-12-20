@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PremiseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,5 @@ Route::post('/login', [UserController::class, 'authorisationPost']);
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::view('/catalog', 'users.catalog')->name('catalog');
-Route::post('/catalog', [UserController::class, 'createPremise'])->name('createPremise');
+Route::get('/catalog', [PremiseController::class, 'getPremises'])->name('catalog');
+Route::post('/catalog', [PremiseController::class, 'createPremise'])->name('createPremise');

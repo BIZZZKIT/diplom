@@ -13,4 +13,9 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = ['id'];
+
+    public function premise()
+    {
+        return $this->hasMany(Premise::class);
+    }
 }

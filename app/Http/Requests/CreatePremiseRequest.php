@@ -22,9 +22,11 @@ class CreatePremiseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => ['required', 'numeric', 'min:1'],
-            'count_room' => ['required', 'integer', 'min:1'],
-            'square' => ['required', 'numeric', 'min:1'],
+            'photos' => 'required|array',
+            'photos.*' => 'image|mimes:jpeg,jpg,png|max:5120',
+            'price' => ['required', 'numeric'],
+            'count_room' => ['required', 'integer'],
+            'square' => ['required', 'numeric'],
             'address' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
         ];

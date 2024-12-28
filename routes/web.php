@@ -28,3 +28,5 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/catalog', [PremiseController::class, 'getPremises'])->name('catalog');
 Route::post('/catalog', [PremiseController::class, 'createPremise'])->name('createPremise');
+Route::get('/catalog/regions/{districtId}', [\App\Http\Controllers\LocationController::class, 'getRegions'], );
+Route::get('/catalog/cities/{regionId}', [\App\Http\Controllers\LocationController::class, 'getCities'], );

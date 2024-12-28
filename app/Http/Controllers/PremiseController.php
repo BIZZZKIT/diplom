@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePremiseRequest;
+use App\Models\Cities;
+use App\Models\FederalDistricts;
 use App\Models\ImagesPremises;
 use App\Models\Premise;
+use App\Models\Regions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,10 +30,14 @@ class PremiseController extends Controller
         return back()->with('successPremiseCreate', 'Помещение создано');
     }
 
-    public function getPremises()
+    public function getPremises(Request $request)
     {
         $premises = Premise::with('images')->get();
+        $cities = Cities::orderBy('name', 'asc')->pluck('name', 'id');
+        $regions = Regions::orderBy('name', 'asc')->pluck('name','id');
+        $federalDistricts = FederalDistricts::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('users.catalog',compact('premises'));
+        return view('users.catalog', compact('premises', 'cities', 'regions', 'federalDistricts'));
     }
+
 }

@@ -16,7 +16,11 @@ return new class extends Migration
             $table->string('price');
             $table->string('count_room');
             $table->integer('square');
-            $table->string('address');
+            $table->enum('typeOfSell', ['Аренда', 'Продажа']);
+            $table->foreignIdFor(\App\Models\FederalDistricts::class, 'district_id');
+            $table->foreignIdFor(\App\Models\Regions::class, 'region_id');
+            $table->enum('flatOrHouse', ['Квартира', 'Дом']);
+            $table->foreignIdFor(\App\Models\Cities::class, 'city_id');
             $table->string('description');
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();

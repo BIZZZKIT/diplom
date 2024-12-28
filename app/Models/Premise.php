@@ -20,4 +20,18 @@ class Premise extends Model
     {
         return $this->hasMany(ImagesPremises::class , 'premise_id');
     }
+
+    public function federalDistricts()
+    {
+        return $this->hasOneThrough(FederalDistricts::class, Regions::class, 'id', 'id', 'region_id', 'district_id');
+    }
+
+    public function regions()
+    {
+        return $this->hasOneThrough(Regions::class, Cities::class, 'id', 'id', 'city_id', 'region_id');
+    }
+
+    public function cities(){
+        return $this->belongsTo(Cities::class, 'city_id');
+    }
 }

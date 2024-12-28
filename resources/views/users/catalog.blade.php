@@ -10,13 +10,45 @@
         outline: none;
     }
 
-    .cards{
+    .cards {
         padding-top: 94px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
     }
+
+    .formSearch {
+        padding-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
+
+    .formSearch .container form {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+    }
+
+    .formSearch .container form .btn {
+        color: black;
+        border: none;
+        background-color: #FFC300;
+        grid-column: 4 / span 2;
+        grid-row: 2;
+    }
+
+
+    .formSearch .container {
+        position: relative;
+        z-index: 2;
+    }
 </style>
+
 @extends('welcome')
 @section('title', 'Каталог')
 @section('content')
@@ -50,14 +82,16 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Цена</label>
-                                    <input type="text" class="form-control @error('price') is-invalid @enderror"
-                                           id="price" name="price" required>
+                                    <input type="number" step="0.01"
+                                           class="form-control @error('price') is-invalid @enderror" id="price"
+                                           name="price" required>
                                     @error('price')
                                     <div class="invalid-feedback">
                                         {{$message}}
                                     </div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="count_room" class="form-label">Кол-во комнат</label>
                                     <input type="number" class="form-control @error('count_room') is-invalid @enderror"
@@ -68,16 +102,75 @@
                                     </div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3">
-                                    <label for="square" class="form-label">Площадь</label>
-                                    <input type="number" class="form-control @error('square') is-invalid @enderror"
-                                           id="square" name="square" required>
+                                    <label for="square" class="form-label">Площадь (м²)</label>
+                                    <input type="number" step="0.01"
+                                           class="form-control @error('square') is-invalid @enderror" id="square"
+                                           name="square" required>
                                     @error('square')
                                     <div class="invalid-feedback">
                                         {{$message}}
                                     </div>
                                     @enderror
                                 </div>
+
+                                <div class="mb-3">
+                                    <label for="typeOfSell" class="form-label">Тип продажи</label>
+                                    <select class="form-select @error('typeOfSell') is-invalid @enderror"
+                                            id="typeOfSell" name="typeOfSell" required>
+                                        <option value="Аренда">Аренда</option>
+                                        <option value="Продажа">Продажа</option>
+                                    </select>
+                                    @error('typeOfSell')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3" id="district_block">
+                                    <label for="district" class="form-label">Федеральный округ</label>
+                                    <select name="district_id" id="district_id" class="form form-select">
+                                        <option>Выберите федеральный округ</option>
+                                        @foreach($federalDistricts as $id => $name)
+                                            <option value="{{$id}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="region_block" style="display: none">
+                                    <label for="region_id" class="form-label">Регион</label>
+                                    <select name="region_id" id="region_id" class="form form-select">
+                                        @foreach($regions as $id => $name)
+                                            <option value="{{$id}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="city_block" style="display: none">
+                                    <label for="city" class="form-label">Город</label>
+                                    <select name="city_id" id="city_id" class="form form-select">
+                                        @foreach($cities as $id => $name)
+                                            <option value="{{$id}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="flatOrHouse" class="form-label">Тип объекта</label>
+                                    <select class="form-select @error('flatOrHouse') is-invalid @enderror"
+                                            id="flatOrHouse" name="flatOrHouse" required>
+                                        <option value="Квартира">Квартира</option>
+                                        <option value="Дом">Дом</option>
+                                    </select>
+                                    @error('flatOrHouse')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                </div>
+
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Адрес</label>
                                     <input type="text" class="form-control @error('address') is-invalid @enderror"
@@ -88,20 +181,22 @@
                                     </div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="photos" class="form-label">Фотографии</label>
-                                    <input type="file" class="form-control @error('photo') is-invalid @enderror"
-                                           id="photos" name="photos[]" required multiple>
+                                    <input type="file" class="form-control @error('photos') is-invalid @enderror"
+                                           id="photos" name="photos[]" multiple required>
                                     @error('photos')
                                     <div class="invalid-feedback">
                                         {{$message}}
                                     </div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Описание</label>
                                     <textarea class="form-control @error('description') is-invalid @enderror"
-                                              name="description" id="description" cols="30" rows="10"></textarea>
+                                              name="description" id="description" rows="5" required></textarea>
                                     @error('description')
                                     <div class="invalid-feedback">
                                         {{$message}}
@@ -109,15 +204,64 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="modal-footer" style="border-top-color: #FFC300">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                                 <button type="submit" class="btn btn-yellow" style="background-color: #FFC300">
                                     Сохранить
                                 </button>
                             </div>
                         </form>
+
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="formSearch">
+            <div class="container">
+                <form style="font-family: 'Roboto'; font-weight: normal;">
+                    <div class="mb-3">
+                        <select class="form form-select">
+                            <option>Продажа</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form form-select">
+                            @foreach($cities as $city)
+                                <option>{{$city}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form form-select">
+                            <option>Квартира</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" placeholder="Кол-во комнат">
+                    </div>
+                    <div class="mb-3">
+                        <select class="form form-select">
+                            @foreach($regions as $region)
+                                <option>{{$region}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form form-select">
+                            @foreach($federalDistricts as $district)
+                                <option>{{$district}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" placeholder="От">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" placeholder="До">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                </form>
             </div>
         </div>
         <div class="cards">

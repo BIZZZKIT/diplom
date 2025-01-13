@@ -15,8 +15,14 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignIdFor(\App\Models\Regions::class, 'region_id');
+            $table->unsignedBigInteger('region_id');
+            $table->foreign('region_id')
+            ->references('id')
+            ->on('regions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
+
     }
 
     /**

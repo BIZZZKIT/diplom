@@ -60,7 +60,7 @@
         <div class="container-fluid">
 
             <!-- Логотип слева -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{route('welcome')}}">
                 <img src="{{asset('assets/images/logo.png')}}" alt="Logo">
             </a>
 
@@ -76,22 +76,26 @@
                         <a class="nav-link active" aria-current="page" href="{{route('catalog')}}">Каталог</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">О компании</a>
+                        <a class="nav-link" href="{{route('about')}}">О компании</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Контакты</a>
+                        <a class="nav-link" href="{{route('contact')}}" aria-disabled="true">Контакты</a>
                     </li>
                 </ul>
 
                 @auth()
+                    @if(\Illuminate\Support\Facades\Auth::user()->is_blocked)
+                        <button style="margin-right: 10px;" class="btn btn-danger">Вы заблокированы</button>
+                    @endif
                     <div class="account">
                         <li class="nav-item dropdown" style="list-style: none;">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img width="50px" src="{{asset('assets/images/user.png')}}" alt="User">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="{{route('savedPremises')}}">Сохраненные объекты</a></li>
+                                <li><a class="dropdown-item" href="{{route('yourPremises')}}">Ваши объекты</a></li>
+                                <li><a class="dropdown-item" href="{{route('yoursReports')}}">Ваши жалобы</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{route('logout')}}">Выйти</a></li>
                             </ul>

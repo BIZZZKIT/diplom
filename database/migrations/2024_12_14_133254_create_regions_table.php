@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(\App\Models\FederalDistricts::class, 'district_id');
+            $table->unsignedBigInteger('district_id');
+            $table->foreign('district_id')
+            ->references('id')
+            ->on('federal_districts')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -32,6 +32,7 @@ class CreatePremiseRequest extends FormRequest
             'region_id' => ['required', 'exists:regions,id'],
             'city_id' => ['required', 'exists:cities,id'],
             'flatOrHouse' => ['required', 'in:Квартира,Дом'],
+            'address' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
         ];
     }
@@ -75,8 +76,13 @@ class CreatePremiseRequest extends FormRequest
             'flatOrHouse.required' => 'Пожалуйста, выберите тип объекта.',
             'flatOrHouse.in' => 'Тип объекта может быть только "Квартира" или "Дом".',
 
+            'address.required' => 'Пожалуйста, укажите адрес.',
+            'address.string' => 'Адрес должен быть строкой.',
+            'address.max' => 'Адрес не может превышать 255 символов.',
+
             'description.string' => 'Описание должно быть строкой.',
             'description.max' => 'Описание не может превышать 1000 символов.',
         ];
     }
+
 }

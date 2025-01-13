@@ -23,6 +23,10 @@ class UserController extends Controller
     public function authorisationPost(AuthorisationRequest $request)
     {
         if(Auth::attempt($request->validated())){
+            if (Auth::user()->is_admin){
+                $request->session()->regenerate();
+                return redirect()->route('admin');
+            }
             $request->session()->regenerate();
             return redirect()->route('welcome');
         }

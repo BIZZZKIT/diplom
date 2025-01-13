@@ -34,4 +34,14 @@ class Premise extends Model
     public function cities(){
         return $this->belongsTo(Cities::class, 'city_id');
     }
+
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'saved_premises');
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Reports::class, 'premise_id');
+    }
 }

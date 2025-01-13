@@ -18,4 +18,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Premise::class);
     }
+
+    public function savedPremises()
+    {
+        return $this->belongsToMany(Premise::class, 'saved_premises');
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Reports::class, 'user_id');
+    }
+
+    public function rewiev()
+    {
+        return $this->hasMany(Reviews::class);
+    }
 }

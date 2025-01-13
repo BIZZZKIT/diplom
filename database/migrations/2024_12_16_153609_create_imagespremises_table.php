@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('images_premises', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->foreignIdFor(\App\Models\Premise::class, 'premise_id');
+            $table->unsignedBigInteger('premise_id');
+            $table->foreign('premise_id')
+            ->references('id')
+            ->on('premises')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -56,6 +56,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-warning" value="{{$premise->id}}">Удалить из каталога
                         </button>
+                    </form>
                         <button type="button" class="btn btn-warning edit-button"
                                 data-bs-toggle="modal" data-bs-target="#modal-{{ $yourPremise->id }}"
                                 style="font-family: 'Montserrat', sans-serif">
@@ -219,7 +220,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                 @else
                     <button class="btn btn-danger">Удалено по причине: @if($premise->bannedOwner !== null) Пользователь заблокирован @elseif($premise->deletedForReason !== null) {{$premise->deletedForReason}} @endif</button>
                     @endif

@@ -22,8 +22,11 @@ class CreatePremiseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photos' => 'required|array',
+            'photos' => 'required|array|min:1',
             'photos.*' => 'image|mimes:jpeg,jpg,png|max:5120',
+            'panoramas' => 'nullable|array',
+            'panoramas.*.room_name' => 'required|string|max:255',
+            'panoramas.*.photo' => 'required|image|mimes:jpeg,jpg,png|max:10240',
             'price' => ['required', 'numeric', 'min:1'],
             'count_room' => ['required', 'integer', 'min:1'],
             'square' => ['required', 'numeric', 'min:1'],
@@ -43,6 +46,8 @@ class CreatePremiseRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'panoramas.*.room_name.required' => 'Для каждой панорамы укажите название комнаты',
+            'panoramas.*.photo.required' => 'Для каждой панорамы необходимо добавить фотографию',
             'photos.required' => 'Добавьте хотя бы одну фотографию.',
             'photos.array' => 'Фотографии должны быть массивом.',
             'photos.*.image' => 'Каждый файл должен быть изображением.',

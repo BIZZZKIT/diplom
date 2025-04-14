@@ -53,6 +53,102 @@
 @extends('welcome')
 @section('title', 'Каталог')
 @section('content')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Находим форму и создаем контейнер для панорам
+            const $form = $('form[action="{{route('createPremise')}}"]');
+            const $panoramaContainer = $('<div>', {
+                id: 'panorama-container',
+                class: 'mb-3'
+            });
+
+            // Вставляем контейнер перед футером модального окна
+            $form.find('.modal-footer').before($panoramaContainer);
+
+            // Создаем кнопку для добавления панорамы (центрированную)
+            const $addPanoramaBtn = $('<button>', {
+                type: 'button',
+                class: 'btn btn-yellow mb-3 d-block mx-auto',
+                css: {
+                    'background-color': '#FFC300'
+                },
+                text: 'Добавить панораму'
+            });
+
+            // Вставляем кнопку перед контейнером панорам
+            $panoramaContainer.before($addPanoramaBtn);
+
+            // Счетчик для уникальных ID
+            let panoramaCount = 0;
+
+            // Обработчик клика по кнопке добавления панорамы
+            $addPanoramaBtn.on('click', function() {
+                panoramaCount++;
+
+                // Создаем контейнер для панорамы
+                const $panoramaDiv = $('<div>', {
+                    class: 'panorama-item mb-3 p-3',
+                    css: {
+                        'border': '1px solid #FFC300',
+                        'border-radius': '5px'
+                    }
+                });
+
+                // Добавляем поле для названия комнаты
+                const $roomNameLabel = $('<label>', {
+                    class: 'form-label',
+                    text: 'Название комнаты',
+                    'for': `room_name_${panoramaCount}`
+                });
+
+                const $roomNameInput = $('<input>', {
+                    type: 'text',
+                    class: 'form-control mb-2',
+                    id: `room_name_${panoramaCount}`,
+                    name: `panoramas[${panoramaCount}][room_name]`,
+                    required: true
+                });
+
+                // Добавляем поле для загрузки панорамы
+                const $panoramaLabel = $('<label>', {
+                    class: 'form-label',
+                    text: 'Фотография панорамы',
+                    'for': `panorama_photo_${panoramaCount}`
+                });
+
+                const $panoramaInput = $('<input>', {
+                    type: 'file',
+                    class: 'form-control mb-2',
+                    id: `panorama_photo_${panoramaCount}`,
+                    name: `panoramas[${panoramaCount}][photo]`,
+                    accept: 'image/*',
+                    required: true
+                });
+
+                // Добавляем кнопку удаления панорамы
+                const $removeBtn = $('<button>', {
+                    type: 'button',
+                    class: 'btn btn-danger btn-sm',
+                    text: 'Удалить'
+                }).on('click', function() {
+                    $panoramaDiv.remove();
+                });
+
+                // Собираем все элементы вместе
+                $panoramaDiv.append(
+                    $roomNameLabel,
+                    $roomNameInput,
+                    $panoramaLabel,
+                    $panoramaInput,
+                    $removeBtn
+                );
+
+                // Добавляем в контейнер
+                $panoramaContainer.append($panoramaDiv);
+            });
+        });
+    </script>
     <div class="container">
         @if(session('successPremiseCreate'))
             <div

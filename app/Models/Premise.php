@@ -44,4 +44,8 @@ class Premise extends Model
     {
         return $this->hasMany(Reports::class, 'premise_id');
     }
+    public function panoramas()
+    {
+        return $this->hasMany(PremisePanorama::class);
+    }
 }

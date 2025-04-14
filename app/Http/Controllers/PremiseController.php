@@ -7,6 +7,7 @@ use App\Models\Cities;
 use App\Models\FederalDistricts;
 use App\Models\ImagesPremises;
 use App\Models\Premise;
+use App\Models\PremisePanorama;
 use App\Models\Regions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,16 +19,38 @@ class PremiseController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
 
+        // Создаем помещение
         $premise = Premise::create($data);
+
+        // Обработка основных фотографий
         if ($request->hasFile('photos')) {
             foreach($request->file('photos') as $image) {
                 $fileName = time() . '-' . $image->getClientOriginalName();
                 $path = $image->storeAs('premises', $fileName, 'public');
-                ImagesPremises::create(['path' => $path, 'premise_id' => $premise->id]);
+                ImagesPremises::create([
+                    'path' => $path,
+                    'premise_id' => $premise->id
+                ]);
             }
         }
 
-        return back()->with('successPremiseCreate', 'Помещение создано');
+        // Обработка панорам
+        if ($request->has('panoramas')) {
+            foreach ($request->panoramas as $panorama) {
+                if (isset($panorama['photo']) && $panorama['photo']->isValid()) {
+                    $fileName = 'panorama-' . time() . '-' . $panorama['photo']->getClientOriginalName();
+                    $path = $panorama['photo']->storeAs('premises/panoramas', $fileName, 'public');
+
+                    PremisePanorama::create([
+                        'path' => $path,
+                        'premise_id' => $premise->id,
+                        'room_name' => $panorama['room_name']
+                    ]);
+                }
+            }
+        }
+
+        return back()->with('successPremiseCreate', 'Помещение успешно создано');
     }
 
     public function getPremises(Request $request)
@@ -88,7 +111,7 @@ class PremiseController extends Controller
 
     public function getPremiseItem($premiseId)
     {
-        $premise = Premise::with('images', 'federalDistricts', 'regions', 'cities', 'user')->findOrFail($premiseId);
+        $premise = Premise::with('images', 'federalDistricts', 'regions', 'cities', 'user', 'panoramas')->findOrFail($premiseId);
         return view('users.premisePage', compact('premise'));
     }
 

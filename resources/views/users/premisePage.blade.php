@@ -81,6 +81,26 @@
             <h2>{{$premise->price}} Рублей</h2>
             <p>{{$premise->federalDistricts->name}}, {{$premise->regions->name}}, {{$premise->cities->name}}, {{$premise->address}}</p>
             <h3>Пользователь: <br>{{$premise->user->FIO}} <br> <br> Telegram: {{$premise->user->telegram_user}}</h3>
+            <form>
+                <button type="button" onclick="startChat({{ $premise->user->id }})" class="btn btn-primary">
+                    Написать
+                </button>
+            </form>
+            <script>
+                window.startChat = function (userId) {
+                    $.post('/chat/start', {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        user_id: userId
+                    }, function (response) {
+                        if (response.success) {
+                            toggleChatPopup(); // Показываем popup
+                            openChat(response.chat_id); // Открываем нужный чат
+                        } else {
+                            alert('Не удалось начать чат');
+                        }
+                    });
+                }
+            </script>
             <h2>Описание: <p>{{$premise->description}}</p></h2>
         </div>
     </div>
@@ -88,7 +108,7 @@
     @if($premise->panoramas->isNotEmpty())
         <div class="container mt-5 mb-5" style="max-width: 1200px; margin: 0 auto;">
             <div class="panoramas-container">
-                <h2 class="text-center mb-4" style="color: black">Панорамы помещения</h2>
+                <h2 class="text-center mb-4" style="color: white">Панорамы комнат</h2>
 
                 <div class="row g-4 justify-content-center">
                     @foreach($premise->panoramas as $panorama)
@@ -114,7 +134,7 @@
         <style>
             .panoramas-container {
                 padding: 30px;
-                background-color: #f8f9fa;
+                background-color: rgba(0, 0, 0, 0.3);
                 border-radius: 15px;
                 box-shadow: 0 0 15px rgba(0,0,0,0.1);
             }

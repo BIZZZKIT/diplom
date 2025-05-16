@@ -19,10 +19,8 @@ class PremiseController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
 
-        // Создаем помещение
         $premise = Premise::create($data);
 
-        // Обработка основных фотографий
         if ($request->hasFile('photos')) {
             foreach($request->file('photos') as $image) {
                 $fileName = time() . '-' . $image->getClientOriginalName();
@@ -34,7 +32,6 @@ class PremiseController extends Controller
             }
         }
 
-        // Обработка панорам
         if ($request->has('panoramas')) {
             foreach ($request->panoramas as $panorama) {
                 if (isset($panorama['photo']) && $panorama['photo']->isValid()) {

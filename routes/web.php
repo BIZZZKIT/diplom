@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\NewsController;
@@ -42,6 +43,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/catalog/report/{premiseId}', [ReportsController::class, 'createReport'])->name('createReport');
     Route::get('/reports', [ReportsController::class, 'getYoursReports'])->name('yoursReports');
     Route::post('/contacts', [\App\Http\Controllers\ReviewsController::class, 'createReview'])->name('createReview');
+    Route::get('/chat', [ChatController::class, 'index']);
+    Route::get('/chat/{chat}/messages', [ChatController::class, 'getMessages']);
+    Route::post('/chat/send', [ChatController::class, 'sendMessage']);
+    Route::post('/chat/start', [ChatController::class, 'startChat'])->middleware('auth');
+
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('/admin', [AdminController::class, 'getAllReports'])->name('admin');
+        Route::put('/admin/deleteFromCatalog/{premiseId}', [AdminController::class, 'deletePremiseFromCatalog'])->name('deletePremiseFromCatalog');
+        Route::post('/admin/ban/{userId}', [AdminController::class, 'getBanUser'])->name('banUser');
+        Route::post('/admin/createNews', [NewsController::class, 'createNews'])->name('createNews');
+        Route::post('/admin/deniedReport/{reportId}', [AdminController::class, 'changeStatusDenied'])->name('changeStatusDenied');
+        Route::get('/admin/reviews', [AdminController::class, 'getReviewsAll'])->name('reviews');
+        Route::delete('/admin/deleteReview/{reviewId}', [AdminController::class, 'deleteReview'])->name('deleteReview');
+    });
 });
 Route::get('/catalog', [PremiseController::class, 'getPremises'])->name('catalog');
 Route::get('/catalog/filter', [PremiseController::class, 'filterPremises'])->name('catalog.filter');
@@ -53,13 +68,3 @@ Route::get('/catalog/premiseItem/{premiseId}', [\App\Http\Controllers\PremiseCon
 
 Route::view('/about', 'about')->name('about');
 Route::view('/contacts', 'contacts')->name('contact');
-
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('/admin', [AdminController::class, 'getAllReports'])->name('admin');
-    Route::put('/admin/deleteFromCatalog/{premiseId}', [AdminController::class, 'deletePremiseFromCatalog'])->name('deletePremiseFromCatalog');
-    Route::post('/admin/ban/{userId}', [AdminController::class, 'getBanUser'])->name('banUser');
-    Route::post('/admin/createNews', [NewsController::class, 'createNews'])->name('createNews');
-    Route::post('/admin/deniedReport/{reportId}', [AdminController::class, 'changeStatusDenied'])->name('changeStatusDenied');
-    Route::get('/admin/reviews', [AdminController::class, 'getReviewsAll'])->name('reviews');
-    Route::delete('/admin/deleteReview/{reviewId}', [AdminController::class, 'deleteReview'])->name('deleteReview');
-});

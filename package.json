@@ -11,6 +11,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "photo-sphere-viewer": "^4.8.1"
+        "laravel-echo": "^2.1.0",
+        "photo-sphere-viewer": "^4.8.1",
+        "pusher-js": "^8.4.0"
     }
 }

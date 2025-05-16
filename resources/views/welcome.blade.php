@@ -6,6 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -13,7 +14,10 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uevent@2/browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=3c919aec-a764-4502-9dcf-caf7c92e7a42&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=3c919aec-a764-4502-9dcf-caf7c92e7a42&lang=ru_RU"
+            type="text/javascript"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.3/echo.iife.js"></script>
     <title>@yield('title', 'Главная страница')</title>
 </head>
 <script>
@@ -136,7 +140,7 @@
     html, body {
         margin: 0;
         padding: 0;
-        height: 100%; /* Устанавливаем высоту для корневых элементов */
+        height: 100%;
         display: flex;
         flex-direction: column;
     }
@@ -144,18 +148,17 @@
     .wrapper {
         display: flex;
         flex-direction: column;
-        min-height: 100vh; /* Минимальная высота страницы равна высоте окна */
+        min-height: 100vh;
     }
 
     main {
-        flex: 1; /* Основное содержимое занимает оставшееся пространство */
+        flex: 1;
     }
 
     footer {
         background-color: black;
         color: white;
     }
-
 </style>
 <body>
 <div class="wrapper">
@@ -190,7 +193,11 @@
         </footer>
     @endif
 </div>
+@auth()
+    @include('components.chat')
+@endauth
 </body>
 </html>
+
 
 

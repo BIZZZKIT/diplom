@@ -93,9 +93,13 @@
                                 <img width="50px" src="{{asset('assets/images/user.png')}}" alt="User">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('savedPremises')}}">Сохраненные объекты</a></li>
-                                <li><a class="dropdown-item" href="{{route('yourPremises')}}">Ваши объекты</a></li>
-                                <li><a class="dropdown-item" href="{{route('yoursReports')}}">Ваши жалобы</a></li>
+                                @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+                                    <li><a class="dropdown-item" href="{{route('admin')}}">Панель администратора</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{route('savedPremises')}}">Сохраненные объекты</a></li>
+                                    <li><a class="dropdown-item" href="{{route('yourPremises')}}">Ваши объекты</a></li>
+                                    <li><a class="dropdown-item" href="{{route('yoursReports')}}">Ваши жалобы</a></li>
+                                @endif
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{route('logout')}}">Выйти</a></li>
                             </ul>

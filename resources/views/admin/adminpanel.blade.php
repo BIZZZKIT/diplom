@@ -77,7 +77,6 @@
         <table class="table table-bordered " style="border-radius: 20px; overflow: hidden; margin: 50px;">
             <thead>
             <tr>
-                <th scope="col">id</th>
                 <th scope="col">ФИО кто пожаловался</th>
                 <th scope="col">Объявление</th>
                 <th scope="col">Владелец объявления</th>
@@ -89,7 +88,6 @@
             <tbody>
             @foreach($reports as $report)
                 <tr>
-                    <th scope="col">{{$report->id}}</th>
                     <th scope="col">{{$report->userSender->FIO}}</th>
                     <th scope="col">
                         @php
@@ -101,38 +99,39 @@
                     <th scope="col">{{$report->premise->user->FIO}}</th>
                     <th scope="col">{{$report->textOfReport}}</th>
                     <th scope="col">
-                        <div class="proof" style="width: 10rem;height: 15rem; border-radius: 20px">
-                            <div id="carousel-{{ $report->id }}-{{ $loop->index }}" class="carousel slide"
-                                 data-bs-ride="carousel">
+                        <div class="proof" style="width: 100%; max-width: 300px; height: auto;">
+                            <div id="carousel-{{ $report->id }}-{{ $loop->index }}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" style="border-radius: 20px">
                                     @foreach($imagePathsProofs as $index => $path)
                                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                            <img src="{{ asset('storage/' . $path) }}" style="height: 20rem"
+                                            <img src="{{ asset('storage/' . $path) }}"
+                                                 style="width: 100%; height: 200px; object-fit: cover;"
                                                  class="d-block w-100"
-                                                 style="height: 255px; border-radius: 20px"
                                                  alt="Image {{ $index + 1 }}">
                                         </div>
                                     @endforeach
                                 </div>
-                                <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carousel-{{ $report->id }}-{{ $loop->index }}"
-                                        data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carousel-{{ $report->id }}-{{ $loop->index }}"
-                                        data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                                @if(count($imagePathsProofs) > 1)
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carousel-{{ $report->id }}-{{ $loop->index }}"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carousel-{{ $report->id }}-{{ $loop->index }}"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </th>
                     <th scope="col" style="gap: 20px">
                         @if($report->premise->deletedForReason === null && $report->premise->bannedOwner === null && $report->statuses === 'На рассмотрении')
                         <button type="button" class="btn btn-yellow" data-bs-toggle="modal"
-                                    style="background-color: #FFC300; border: none"
+                                    style="background-color: #FFC300; border: none; margin-bottom: 10px"
                                     data-bs-target="#deleteModal-{{ $report->id }}">
                                 Удалить объявление
                             </button>
@@ -179,7 +178,7 @@
                             </div>
                             <form method="POST" action="{{route('banUser', ['userId' => $report->premise->user_id])}}">
                                 @csrf
-                                <button type="submit" class="btn btn-danger">Заблокировать пользователя</button>
+                                <button type="submit" class="btn btn-danger" style=" margin-bottom: 10px">Заблокировать пользователя</button>
                             </form>
                             <form method="post" action="{{route('changeStatusDenied', ['reportId' => $report->id])}}">
                                 @csrf

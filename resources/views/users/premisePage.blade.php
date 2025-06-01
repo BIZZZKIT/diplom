@@ -81,8 +81,8 @@
             <h2>{{$premise->price}} Рублей</h2>
             <p>{{$premise->federalDistricts->name}}, {{$premise->regions->name}}, {{$premise->cities->name}}, {{$premise->address}}</p>
             <h3>Пользователь: <br>{{$premise->user->FIO}} <br> <br> Telegram: {{$premise->user->telegram_user}}</h3>
-            <form>
-                <button type="button" onclick="startChat({{ $premise->user->id }})" class="btn btn-primary">
+            <form style="padding: 10px 0px">
+                <button type="button" onclick="startChat({{ $premise->user->id }})" class="btn btn-primary" style="background-color: #5B5400; border: none; padding: 10px 40px">
                     Написать
                 </button>
             </form>

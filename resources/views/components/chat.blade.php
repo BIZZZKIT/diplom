@@ -344,6 +344,7 @@
         pusher.connection.bind('state_change', function (states) {
             console.log('Pusher connection state changed:', states);
         });
+
     });
 </script>
 

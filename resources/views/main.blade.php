@@ -49,6 +49,68 @@
         justify-items: center; /* Добавим это свойство */
     }
 
+    .card {
+        width: 18rem;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+    }
+
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+    }
+
+    /* Overlay */
+    .news-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .news-overlay.active {
+        display: flex;
+    }
+
+    .news-popup {
+        background-color: #fff;
+        padding: 30px;
+        width: 80%;
+        max-width: 700px;
+        max-height: 80%;
+        overflow-y: auto;
+        border-radius: 12px;
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .news-popup img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .close-overlay {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
     .cards_reviews {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -171,17 +233,44 @@
         </div>
         <div class="cards_news">
             @foreach($news as $new)
-                <div class="card" style="width: 18rem;">
-                    <img src="{{asset('storage/' . $new->imagePath)}}" class="card-img-top" alt="...">
+                <div class="card" onclick="openNews({{ $new->id }})">
+                    <img src="{{ asset('storage/' . $new->imagePath) }}" class="card-img-top" alt="Новость">
                     <div class="card-body">
-                        <h3 class="card-title">{{$new->title}}</h3>
-                        <p class="card-text">{{$new->main_text}}</p>
+                        <h4 class="card-title">{{ $new->title }}</h4>
+                    </div>
+                </div>
+
+                <!-- Overlay -->
+                <div class="news-overlay" id="overlay-{{ $new->id }}">
+                    <div class="news-popup">
+                        <button class="close-overlay" onclick="closeNews({{ $new->id }})">&times;</button>
+                        <h2 style="color:black">{{ $new->title }}</h2>
+                        <img src="{{ asset('storage/' . $new->imagePath) }}" alt="Новость">
+                        <p style="color:black">{{ $new->main_text }}</p>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
 </div>
+<script>
+    function openNews(id) {
+        document.getElementById(`overlay-${id}`).classList.add('active');
+    }
+
+    function closeNews(id) {
+        document.getElementById(`overlay-${id}`).classList.remove('active');
+    }
+
+    // Закрытие по клику вне popup
+    document.querySelectorAll('.news-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
+</script>
 <div class="reviews_container"
      style="position: relative; background-image: url('{{asset('assets/images/backgroundReviews.png')}}'); background-size: cover; background-position: center; padding: 50px 0;">
     <div

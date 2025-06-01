@@ -4,28 +4,35 @@
         bottom: 20px;
         right: 20px;
         z-index: 1000;
-        padding: 10px 15px;
+        padding: 12px 18px;
         background: #5B5400;
         color: #fff;
         border: none;
-        border-radius: 30px;
-        font-size: 20px;
+        border-radius: 50%;
+        font-size: 22px;
         cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    #chatToggleBtn:hover {
+        transform: scale(1.1);
     }
 
     #chatPopup {
         position: fixed;
-        bottom: 70px;
+        bottom: 80px;
         right: 20px;
         width: 600px;
-        height: 400px;
-        background: #000000;
-        border: 1px solid #ddd;
-        border-radius: 10px;
+        height: 450px;
+        background: #1e1e1e;
+        color: #fff;
+        border-radius: 12px;
         display: none;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         z-index: 999;
         overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .chat-container {
@@ -35,49 +42,162 @@
 
     .chat-list {
         width: 40%;
-        border-right: 1px solid #ccc;
+        background-color: #2c2c2c;
+        border-right: 1px solid #444;
         overflow-y: auto;
+        padding: 10px;
     }
 
     .chat-item {
-        padding: 10px;
+        padding: 12px;
+        margin-bottom: 8px;
+        background: #333;
+        border-radius: 8px;
         cursor: pointer;
-        border-bottom: 1px solid #eee;
+        transition: background 0.3s;
+        color: #fff;
     }
 
     .chat-item:hover {
-        background: #000000;
+        background: #444;
     }
 
     .chat-box {
         width: 60%;
         display: flex;
         flex-direction: column;
-        padding: 10px;
+        padding: 12px;
+        background-color: #1e1e1e;
     }
 
     .chat-messages {
         flex-grow: 1;
         overflow-y: auto;
-        border-bottom: 1px solid #000000;
-        margin-bottom: 10px;
+        padding-right: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        background: #2b2b2b;
+        padding: 10px;
+    }
+
+    .chat-messages div {
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .chat-messages b {
+        color: #cfcfcf;
     }
 
     #messageForm {
         display: flex;
+        border-top: 1px solid #444;
+        padding-top: 10px;
     }
 
     #messageInput {
         flex-grow: 1;
-        padding: 5px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: none;
+        background: #3b3b3b;
+        color: #fff;
+        font-size: 14px;
+    }
+
+    #messageInput:focus {
+        outline: none;
+        background: #4a4a4a;
     }
 
     #messageForm button {
-        padding: 5px 10px;
+        margin-left: 10px;
+        padding: 8px 16px;
+        background: #5B5400;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
     }
 
+    #messageForm button:hover {
+        background: #776f00;
+    }
+
+    #noChatsMsg {
+        color: #aaa;
+        padding: 10px;
+    }
+    .chat-bubble {
+        display: flex;
+        margin: 8px 0;
+        width: 100%;
+    }
+
+    .chat-bubble .bubble-content {
+        max-width: 80%;
+        padding: 10px 14px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .chat-bubble.me {
+        justify-content: flex-start;
+    }
+
+    .chat-bubble.me .bubble-content {
+        background-color: #3c3c3c;
+        color: #fff;
+        border-top-left-radius: 0;
+    }
+
+    .chat-bubble.them {
+        justify-content: flex-end;
+    }
+
+    .chat-bubble.them .bubble-content {
+        background-color: #5B5400;
+        color: #fff;
+        border-top-right-radius: 0;
+    }
+    @keyframes fadeInScale {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes fadeOutScale {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    }
+
+    #chatPopup.show {
+        display: block;
+        animation: fadeInScale 0.3s ease-out forwards;
+    }
+
+    #chatPopup.hide {
+        animation: fadeOutScale 0.2s ease-in forwards;
+    }
 
 </style>
+
 <script>
 
     $(document).ready(function () {
@@ -94,8 +214,26 @@
 
         function toggleChatPopup() {
             const popup = document.getElementById('chatPopup');
-            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+
+            if (popup.classList.contains('show')) {
+                popup.classList.remove('show');
+                popup.classList.add('hide');
+                // Ждем окончания анимации, потом удаляем блок только классом, не стилем
+                popup.addEventListener('animationend', function handler() {
+                    popup.classList.remove('hide');
+                    popup.style.display = 'none'; // временно скрываем
+                    popup.removeEventListener('animationend', handler);
+                });
+            } else {
+                popup.style.display = 'block'; // сначала показываем
+                requestAnimationFrame(() => {
+                    popup.classList.remove('hide');
+                    popup.classList.add('show'); // запускаем анимацию появления
+                });
+            }
         }
+
+
 
         window.toggleChatPopup = toggleChatPopup;
 
@@ -115,9 +253,16 @@
                 .then(messages => {
                     $('#chatMessages').html('');
                     messages.forEach(m => {
-                        const senderName = m.sender.id === {{ auth()->id() }} ? 'Вы' : m.sender.FIO;
-                        $('#chatMessages').append(`<div><b>${senderName}:</b> ${m.message}</div>`);
+                        const isMe = m.sender.id === {{ auth()->id() }};
+                        $('#chatMessages').append(`
+        <div class="chat-bubble ${isMe ? 'me' : 'them'}">
+            <div class="bubble-content">
+                <b>${isMe ? 'Вы' : m.sender.FIO}:</b> ${m.message}
+            </div>
+        </div>
+    `);
                     });
+
 
                     scrollToBottom();
                 });
@@ -126,11 +271,13 @@
             currentChannel.bind('MessageSent', function (data) {
                 if (data.message.sender.id !== {{ auth()->id() }}) {
                     $('#chatMessages').append(`
-            <div>
-                <b>${data.message.sender.name}:</b>
-                ${data.message.message} <!-- Используем data.message.message -->
-            </div>
-        `);
+    <div class="chat-bubble them">
+        <div class="bubble-content">
+            <b>${data.message.sender.name}:</b> ${data.message.message}
+        </div>
+    </div>
+`);
+
                     scrollToBottom();
                 }
             });
@@ -147,7 +294,14 @@
                 chat_id: currentChatId,
                 message: messageText
             }, function (res) {
-                $('#chatMessages').append(`<div><b>Вы:</b> ${res.message}</div>`);
+                $('#chatMessages').append(`
+    <div class="chat-bubble me">
+        <div class="bubble-content">
+            <b>Вы:</b> ${res.message}
+        </div>
+    </div>
+`);
+
                 $('#messageInput').val('');
                 scrollToBottom();
             });

@@ -1,127 +1,148 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
     .history {
         position: relative;
-        background-image: url('{{asset('assets/images/_Cream_color_in_the_living_room_091224_.jpg')}}');
-        background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        border-radius: 20px; /* Закругление краёв */
-        overflow: hidden;
-        width: 80%; /* Ширина карточки */
-        margin: 20px auto; /* Центрирование */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 0;
     }
 
-    .history::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: black; /* Затемняющий цвет */
-        opacity: 0.8; /* Прозрачность затемнения */
-        z-index: 1;
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 900px;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        color: white;
     }
 
-    .container {
-        position: relative;
-        z-index: 2; /* Контейнер поверх затемнения */
+    .glass-panel h1, .glass-panel h2 {
+        color: #ffffff;
+    }
+
+    .glass-panel p, .glass-panel li {
+        color: #f1f1f1;
+    }
+
+    .services-section {
+        padding: 60px 20px;
     }
 
     .service-card {
-        background-color: #000000;
-        transition: transform 0.3s, box-shadow 0.3s;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        padding: 30px;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        color: #ffffff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+
     .service-card:hover {
-        transform: scale(1.03);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .service-card ul {
+        padding-left: 20px;
+    }
+
+    .service-icon {
+        font-size: 2rem;
+        color: #dfce01;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .glass-panel {
+            padding: 20px;
+        }
+
+        .service-card {
+            padding: 20px;
+        }
     }
 </style>
 
 
 
+
 @extends('welcome')
 @section('title', 'О компании')
+
 @section('content')
-<div class="history">
-    <div class="container my-5">
-        <h1 class="text-center mb-4" style="font-size: 2.5rem; font-weight: bold;">История компании HouseWorld</h1>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            Компания <strong>HouseWorld</strong> начала свою деятельность в 2010 году в Москве с простой, но амбициозной миссии:
-            сделать покупку, продажу и аренду недвижимости максимально прозрачным, удобным и безопасным процессом для клиентов.
-        </p>
 
-        <h2 class="mt-4" style="font-size: 2rem; font-weight: bold;">Идея создания</h2>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            Идея создания HouseWorld родилась у её основателя, Александра Романова, в момент, когда он сам столкнулся с трудностями поиска квартиры для своей семьи.
-            Постоянные недостоверные объявления, завышенные цены и сложные переговоры с риелторами вдохновили его на создание платформы, которая бы объединила профессионалов и клиентов,
-            предлагая честный сервис и современные решения.
-        </p>
+    <div class="history">
+        <div class="glass-panel">
+            <h1 class="text-center mb-4">История компании HouseWorld</h1>
+            <p><strong>HouseWorld</strong> начала свою деятельность в 2010 году в Москве с амбициозной миссией — сделать рынок недвижимости понятным и удобным для всех.</p>
 
-        <h2 class="mt-4" style="font-size: 2rem; font-weight: bold;">Первые шаги</h2>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            Сначала компания представляла собой небольшой стартап, работающий только в пределах Москвы. Команда из трёх человек, энтузиастов своего дела, вручную проверяла каждое объявление,
-            чтобы гарантировать их достоверность. Уже в первый год работы компания смогла привлечь внимание клиентов, установив стандарты прозрачности и ответственности.
-        </p>
+            <h2 class="mt-4">Идея создания</h2>
+            <p>Вдохновлённый собственными трудностями поиска жилья, Александр Романов основал HouseWorld, чтобы объединить клиентов и профессионалов на прозрачной платформе.</p>
 
-        <h2 class="mt-4" style="font-size: 2rem; font-weight: bold;">Расширение</h2>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            В 2020 году, несмотря на вызовы пандемии, HouseWorld расширила свою деятельность в другие регионы России, открыв офисы в Санкт-Петербурге, Казани и Екатеринбурге.
-            Компания активно использовала видеотуры и дистанционные сделки, что позволило ей удерживать лидерство даже в сложных условиях.
-        </p>
+            <h2 class="mt-4">Первые шаги</h2>
+            <p>Три человека, ручная проверка, высокие стандарты — так началась история, которая быстро привлекла внимание рынка.</p>
 
-        <h2 class="mt-4" style="font-size: 2rem; font-weight: bold;">Сегодня и завтра</h2>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            Сегодня HouseWorld – это команда из более чем 500 специалистов, которые ежедневно помогают тысячам клиентов находить жильё своей мечты.
-            Компания гордится своей репутацией надёжного партнёра, предоставляющего полный спектр услуг – от оценки недвижимости до юридического сопровождения сделок.
-        </p>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            В будущем HouseWorld планирует выйти на международный рынок, предлагая свои инновационные решения в области недвижимости в Европе и Азии.
-            Главная цель компании остаётся неизменной – дарить людям комфорт и уверенность в их решениях, связанных с недвижимостью.
-        </p>
+            <h2 class="mt-4">Расширение</h2>
+            <p>В 2020 году HouseWorld вышла на рынок других городов, внедрив видеотуры и онлайн-сделки в условиях пандемии.</p>
 
-        <h2 class="mt-4" style="font-size: 2rem; font-weight: bold;">Миссия и ценности</h2>
-        <ul style="font-size: 1.2rem; line-height: 1.6; list-style-type: disc; padding-left: 20px;">
-            <li><strong>Прозрачность:</strong> каждый клиент должен понимать процесс и быть уверенным в сделке.</li>
-            <li><strong>Технологии:</strong> использование современных инструментов для повышения качества сервиса.</li>
-            <li><strong>Доверие:</strong> персональный подход и поддержка на всех этапах сотрудничества.</li>
-        </ul>
-        <p style="font-size: 1.2rem; line-height: 1.6;">
-            Компания продолжает следовать этим принципам, вдохновляя доверие и укрепляя своё лидерство в индустрии недвижимости.
-        </p>
-    </div>
+            <h2 class="mt-4">Сегодня и завтра</h2>
+            <p>Более 500 сотрудников, тысячи клиентов и международные амбиции — всё это HouseWorld сегодня.</p>
 
-</div>
-<div class="services-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4" style="font-size: 2.5rem; font-weight: bold;">Наши услуги</h2>
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="service-card p-4 border rounded shadow-sm">
-                    <h3 class="mb-3" style="font-size: 1.8rem; font-weight: bold;">Продажа и покупка недвижимости</h3>
-                    <ul style="font-size: 1.2rem; line-height: 1.6; list-style-type: disc; padding-left: 20px;">
-                        <li>Удобные фильтры для поиска объектов по всем параметрам.</li>
-                        <li>Личные кабинеты для размещения и управления объявлениями.</li>
-                        <li>Система рейтингов и отзывов для доверия к продавцам.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="service-card p-4 border rounded shadow-sm">
-                    <h3 class="mb-3" style="font-size: 1.8rem; font-weight: bold;">Аренда жилья и коммерческих помещений</h3>
-                    <ul style="font-size: 1.2rem; line-height: 1.6; list-style-type: disc; padding-left: 20px;">
-                        <li>Быстрая публикация объявлений.</li>
-                        <li>Возможность заключать дистанционные договоры.</li>
-                        <li>Поддержка онлайн-чатов с арендодателями.</li>
-                    </ul>
-                </div>
-            </div>
-
+            <h2 class="mt-4">Миссия и ценности</h2>
+            <ul>
+                <li><strong>Прозрачность:</strong> доверие через ясные процессы.</li>
+                <li><strong>Технологии:</strong> инновации для удобства клиентов.</li>
+                <li><strong>Доверие:</strong> индивидуальный подход и поддержка.</li>
+            </ul>
         </div>
     </div>
-</div>
 
+    <div class="services-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Наши услуги</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="service-card">
+                        <h3><i class="service-icon bi bi-house-door-fill"></i> Продажа и покупка недвижимости</h3>
+
+                        <p>Удобные фильтры и карта объектов</p>
+                        <p>Личный кабинет для управления объявлениями</p>
+                        <p>Отзывы и рейтинги продавцов</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="service-card">
+                        <h3><i class="service-icon bi bi-key-fill"></i> Аренда жилья и коммерции</h3>
+                        <p>Быстрая публикация и дистанционные договоры</p>
+                        <p>Поддержка онлайн-чата с арендодателями</p>
+                        <p>Интеграция с картой и фильтрами</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
+

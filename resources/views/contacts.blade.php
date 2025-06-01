@@ -1,3 +1,118 @@
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #2c2c2c;
+        background-color: #f9f9f9;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        color: #1e1e1e;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    p, li, textarea, input, a {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+
+    .reviewForm {
+        border-radius: 8px;
+        padding: 40px;
+        margin-bottom: 60px;
+    }
+
+    textarea.form-control {
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding: 12px;
+        font-size: 16px;
+        resize: vertical;
+    }
+
+    .btn-warning {
+        background-color: #c59d5f;
+        border: none;
+        padding: 10px 30px;
+        font-weight: 500;
+        color: #fff;
+    }
+
+    .contacts h1 {
+        margin-bottom: 40px;
+    }
+
+    .contactData {
+        border-radius: 8px;
+        padding: 40px;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+    }
+
+    .contactData a {
+        color: #f1c40f;
+        text-decoration: underline;
+    }
+
+    #map {
+        border-radius: 8px;
+    }
+
+    .staff h1 {
+        font-size: 28px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .staff img {
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .staff h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        color: #ffffff;
+    }
+
+    .staff p {
+        font-size: 16px;
+        color: #6c757d;
+    }
+
+    .alert-success {
+        background-color: #e7f3e4;
+        color: #2d6a4f;
+        border: 1px solid #b7dfb4;
+    }
+
+    .btn-close {
+        background-color: transparent;
+    }
+</style>
+
+
 @extends('welcome')
 @section('title', 'Контакты')
 @section('content')
@@ -96,22 +211,22 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 text-center">
                     <img src="{{asset('assets/images/i.webp')}}" alt="Фото директора" style="width: 250px; height: 250px; border-radius: 50%; margin-bottom: 20px;">
-                    <h3 style="font-family: Arial, sans-serif;">Иван Петров</h3>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">Директор</p>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">С нами с 2015 года</p>
+                    <h3>Иван Петров</h3>
+                    <p>Директор</p>
+                    <p>С нами с 2015 года</p>
                 </div>
                 <div class="col-md-4 text-center">
                     <img src="{{asset('assets/images/i(1).webp')}}" alt="Фото генерального директора" style="width: 250px; height: 250px; border-radius: 50%; margin-bottom: 20px;">
-                    <h3 style="font-family: Arial, sans-serif;">Екатерина Смирнова</h3>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">Генеральный директор</p>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">В компании с 2012 года</p>
+                    <h3>Екатерина Смирнова</h3>
+                    <p>Генеральный директор</p>
+                    <p>В компании с 2012 года</p>
                 </div>
 
                 <div class="col-md-4 text-center">
                     <img src="{{asset('assets/images/3247bd487e4bab8dc2256b91371af6bd.jpg')}}" alt="Фото оператора поддержки" style="width: 250px; height: 250px; border-radius: 50%; margin-bottom: 20px;">
-                    <h3 style="font-family: Arial, sans-serif;">Алексей Сидоров</h3>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">Оператор поддержки</p>
-                    <p style="font-family: Arial, sans-serif; color: #cbcbcb;">Работает с 2020 года</p>
+                    <h3>Алексей Сидоров</h3>
+                    <p>Оператор поддержки</p>
+                    <p>Работает с 2020 года</p>
                 </div>
             </div>
         </div>

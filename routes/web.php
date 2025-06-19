@@ -33,6 +33,7 @@ Route::post('/login', [UserController::class, 'authorisationPost']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::put('/profile/update', [UserController::class, 'update'])->name('profile.update');
     Route::post('/catalog', [PremiseController::class, 'createPremise'])->name('createPremise');
     Route::post('/catalog/savePremise/{premiseId}', [\App\Http\Controllers\SavedPremisesController::class, 'createSavedPremises'])->name('savePremise');
     Route::get('/savedPremises', [\App\Http\Controllers\SavedPremisesController::class, 'getSavedPremise'])->name('savedPremises');

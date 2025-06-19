@@ -10,9 +10,9 @@ class NewsController extends Controller
     public function createNews(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|regex:/^[\p{Cyrillic}a-zA-Z\s\-]+$/u|max:255',
-            'mainText' => 'required|string|regex:/^[\p{Cyrillic}a-zA-Z\s\-]+$/u',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string',
+            'mainText' => 'required|string',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
         ]);
 
         if ($request->hasFile('photo')) {

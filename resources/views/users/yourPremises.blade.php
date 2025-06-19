@@ -12,6 +12,7 @@
 
     .cards {
         padding-top: 94px;
+        padding-bottom: 94px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;

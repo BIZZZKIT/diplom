@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorisationRequest;
+use App\Http\Requests\EditProfileRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,5 +39,15 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->regenerate();
         return back()->with(['success' => 'Вы успешно вышли']);
+    }
+    public function update(EditProfileRequest $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validated();
+
+        $user->update($validated);
+
+        return redirect()->back()->with('successEdited', 'Профиль успешно обновлён.');
     }
 }

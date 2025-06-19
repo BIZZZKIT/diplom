@@ -26,7 +26,7 @@ class RegistrationRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'phone' => [
                 'required',
-                'regex:/^8\(\d{3}\)-\d{3}-\d{2}-\d{2}$/',
+                'regex:/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/',
             ],
             'password' => [
                 'required',
@@ -50,7 +50,7 @@ class RegistrationRequest extends FormRequest
             'email.unique' => 'Этот Email уже зарегистрирован.',
 
             'phone.required' => 'Поле Номер телефона обязательно для заполнения.',
-            'phone.regex' => 'Введите номер телефона в формате 8(999)-999-99-99.',
+            'phone.regex' => 'Введите номер телефона в формате +7(999)-999-99-99.',
 
             'password.required' => 'Поле Пароль обязательно для заполнения.',
             'password.min' => 'Пароль должен содержать не менее :min символов.',

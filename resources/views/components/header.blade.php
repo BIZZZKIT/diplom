@@ -61,7 +61,7 @@
 
             <!-- Логотип слева -->
             <a class="navbar-brand" href="{{route('welcome')}}">
-                <img src="{{asset('assets/images/logo.png')}}" alt="Logo">
+                <img src="{{asset('/public/assets/images/logo.png')}}" alt="Logo">
             </a>
 
             <!-- Кнопка-тогглер -->
@@ -90,15 +90,93 @@
                     <div class="account">
                         <li class="nav-item dropdown" style="list-style: none;">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="50px" src="{{asset('assets/images/user.png')}}" alt="User">
+                                <img width="50px" src="{{asset('public/assets/images/user.png')}}" alt="User">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('savedPremises')}}">Сохраненные объекты</a></li>
-                                <li><a class="dropdown-item" href="{{route('yourPremises')}}">Ваши объекты</a></li>
-                                <li><a class="dropdown-item" href="{{route('yoursReports')}}">Ваши жалобы</a></li>
+                                @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+                                    <li><a class="dropdown-item" href="{{route('admin')}}">Панель администратора</a></li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#userEditModal">
+                                            Изменить данные
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{route('savedPremises')}}">Сохраненные объекты</a></li>
+                                    <li><a class="dropdown-item" href="{{route('yourPremises')}}">Ваши объекты</a></li>
+                                    <li><a class="dropdown-item" href="{{route('yoursReports')}}">Ваши жалобы</a></li>
+                                @endif
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{route('logout')}}">Выйти</a></li>
                             </ul>
+
+                            <!-- Модальное окно (остается без изменений) -->
+                            <div class="modal fade" id="userEditModal" tabindex="-1" aria-labelledby="userEditModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: black; color: white;">
+                                        <div class="modal-header" style="border-bottom-color: #FFC300;">
+                                            <h1 class="modal-title fs-5" style="font-family: 'Montserrat', sans-serif;" id="userEditModalLabel">Редактирование профиля</h1>
+                                            <button type="button" class="btn-close" style="background-color: white;" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST" action="{{ route('profile.update') }}">
+                                        @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="editFIO" class="form-label">ФИО</label>
+                                                    <input type="text" class="form-control @error('FIO') is-invalid @enderror"
+                                                           id="editFIO" name="FIO" value="{{ auth()->user()->FIO }}"
+                                                           style="background-color: #333; color: white; border-color: #555;">
+                                                    @error('FIO')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="editPhone" class="form-label">Телефон</label>
+                                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror"
+                                                           id="editPhone" name="phone" value="{{ auth()->user()->phone }}"
+                                                           style="background-color: #333; color: white; border-color: #555;">
+                                                    @error('phone')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="editEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                                           id="editEmail" name="email" value="{{ auth()->user()->email }}"
+                                                           style="background-color: #333; color: white; border-color: #555;">
+                                                    @error('email')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="editTelegram" class="form-label">Telegram</label>
+                                                    <input type="text" class="form-control @error('telegram_user') is-invalid @enderror"
+                                                           id="editTelegram" name="telegram_user" value="{{ auth()->user()->telegram_user }}"
+                                                           style="background-color: #333; color: white; border-color: #555;">
+                                                    @error('telegram_user')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="border-top-color: #FFC300;">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                <button type="submit" class="btn btn-yellow" style="background-color: #FFC300; border: none;">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </div>
                 @endauth

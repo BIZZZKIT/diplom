@@ -23,6 +23,7 @@ class ChatController extends Controller
     {
         $userOneId = auth()->id();
         $userTwoId = $request->input('user_id');
+
         if ($userOneId == $userTwoId) {
             return response()->json(['success' => false, 'message' => 'Нельзя писать самому себе']);
         }
